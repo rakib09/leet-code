@@ -1,11 +1,15 @@
 public class Palindrome_Number_9 {
     public static boolean isPalindrome(int x) {
-        String xs = String.valueOf(x);
-        for (int i = 0; i < (xs.length() / 2); i++) {
-            if (xs.charAt(i) != xs.charAt(xs.length() - i - 1))
-                return false;
+        if (x < 0) {
+           return false;
         }
-        return true;
+        long reservedX = x;
+        long reversedX = 0;
+        while (x != 0 ) {
+            reversedX = reversedX * 10 + x %10;
+            x = x /10;
+        }
+        return reservedX == reversedX;
     }
 
     public static void main(String[] args) {
