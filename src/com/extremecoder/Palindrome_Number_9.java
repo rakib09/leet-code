@@ -1,3 +1,5 @@
+package com.extremecoder;
+
 public class Palindrome_Number_9 {
     public static boolean isPalindrome(int x) {
         if (x < 0) {

@@ -1,3 +1,5 @@
+package com.extremecoder;
+
 import java.util.HashMap;
 import java.util.Map;
 

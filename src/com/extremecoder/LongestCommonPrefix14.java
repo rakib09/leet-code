@@ -1,3 +1,5 @@
+package com.extremecoder;
+
 public class LongestCommonPrefix14 {
     public static String longestCommonPrefix(String[] strs) {
         if(strs.length == 0) return "";

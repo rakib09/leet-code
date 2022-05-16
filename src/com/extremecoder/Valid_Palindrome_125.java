@@ -1,3 +1,5 @@
+package com.extremecoder;
+
 public class Valid_Palindrome_125 {
     public static boolean isPalindrome(String s) {
         s=s.replaceAll(
