@@ -1,4 +1,4 @@
-package com.extremecoder;
+package com.extremecoder.LeetCode75;
 
 public class FindPivotIndex_724 {
     public static int pivotIndex(int[] nums) {
