@@ -67,8 +67,8 @@ public class Hangman2 {
                 }
                 System.out.print("\n");
                 char[] guessesInput;
-                boolean isValidInput = true;
                 while (true) {
+                    boolean isValidInput = true;
                     System.out.print("Which letter should I check for? ");
                     scanner = new Scanner(System.in);
                     guessesInput = scanner.next().toCharArray();
@@ -122,7 +122,11 @@ public class Hangman2 {
                         System.out.println("--> Not a valid request - either not a letter or already guesses.");
                     } else {
                         guessesChar = guessesInput[0];
-                        break;
+                        if(numberOfChar[Character.toUpperCase(guessesChar)] == -1) {
+                            System.out.println("--> Not a valid request - either not a letter or already guesses.");
+                        } else {
+                            break;
+                        }
                     }
                 }
                 guessesChar = Character.toUpperCase(guessesChar);
