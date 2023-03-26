@@ -85,6 +85,7 @@ public class Hangman2 {
                         break;
                     }
                 }
+                System.out.print("\n");
                 if(guessesInput.length == inputWordFull.length) {
                     for (int i = 0; i < inputWordFull.length; i++) {
                         if(inputWordFull[i] == Character.toUpperCase(guessesInput[i])) {
@@ -92,7 +93,7 @@ public class Hangman2 {
                         }
                     }
                     if(scoreLeftOneShoot == 0) {
-                        System.out.print("\n----------------------------------------------------\n" +
+                        System.out.print("----------------------------------------------------\n" +
                                 "Congratulations!!!\n" +
                                 "You guessed the mystery word \"");
                         for (char letter : inputWordFull) {
@@ -129,6 +130,7 @@ public class Hangman2 {
                         }
                     }
                 }
+                System.out.print("\n");
                 guessesChar = Character.toUpperCase(guessesChar);
                 for (int i = 0; i < inputWord.length; i++) {
                     if(guessesChar == inputWord[i]) {
