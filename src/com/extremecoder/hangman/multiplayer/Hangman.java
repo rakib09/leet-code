@@ -67,118 +67,15 @@ public class Hangman {
             // guess the entire word in one shot
             if(solveInOneShot[0] == 'Y' || solveInOneShot[0] == 'y') {
                 scoreLeftOneShoot = inputWordFull.length;
-                System.out.printf("GameID %d: Letters to try: ", gameId);
-                for (int i = 65 ; i <= 90; i++) {
-                    if(numberOfChar[i] < 0) {
-                        System.out.print("*");
-                    } else {
-                        System.out.printf("%c", i);
-                    }
-                }
-                System.out.print("\n");
-                char[] guessesInput;
-                while (true) {
-                    boolean isValidInput = true;
-                    System.out.printf("GameID %d: Which letter should I check for? ", gameId);
-                    scanner = new Scanner(System.in);  //need to remove
-                    guessesInput = scanner.next().toCharArray();
-                    for (char letter: guessesInput) {
-                        if (guessesInput.length > inputWordFull.length || letter < 65 || letter > 122 ||
-                                (letter > 90 && letter < 97)) {
-                            isValidInput = false;
-                            break;
-                        }
-                    }
-                    if(!isValidInput) {
-                        System.out.printf("GameID %d: --> Not a valid request - either not a letter or already guesses.\n", gameId);
-                    } else {
-                        break;
-                    }
-                }
-                System.out.print("\n");
-                if(guessesInput.length == inputWordFull.length) {
-                    for (int i = 0; i < inputWordFull.length; i++) {
-                        if(inputWordFull[i] == Character.toUpperCase(guessesInput[i])) {
-                            scoreLeftOneShoot--;
-                        }
-                    }
-                    if(scoreLeftOneShoot == 0) {
-                        System.out.printf("----------------------------------------------------\n" +
-                                "GameID %d: Congratulations!!!\n" +
-                                "          You guessed the mystery word \"", gameId);
-                        for (char letter : inputWordFull) {
-                            System.out.print(letter);
-                        }
-                        System.out.printf("\" in %d guesses!\n", (guessesLeft-1));
-                        System.out.printf("\nGameID %d: Goodbye ....\n" +
-                                "--------------------------------------------------\n", gameId);
-                        guessesLeft = -1;
-                    }
+                System.out.printf("GameID %d: Enter the complete word:", gameId);
+                scanner = new Scanner(System.in);
+                char[] guessesInput = scanner.next().toCharArray();
+                checkFullWord(guessesInput);
+                if(guessesLeft > 0) {
+                    guessAChar(scanner);
                 }
             } else {
-                System.out.printf("GameID %d: Letters to try: ", gameId);
-                for (int i = 65 ; i <= 90; i++) {
-                    if(numberOfChar[i] < 0) {
-                        System.out.print("*");
-                    } else {
-                        System.out.printf("%c", i);
-                    }
-                }
-                System.out.print("\n");
-                char guessesChar;
-                while (true) {
-                    System.out.printf("GameID %d: Which letter should I check for? ", gameId);
-                    scanner = new Scanner(System.in);
-                    char[] guessesInput = scanner.next().toCharArray();
-                    if (guessesInput.length > 1 || guessesInput[0] < 65 || guessesInput[0] > 122 ||
-                            (guessesInput[0] > 90 && guessesInput[0] < 97)) {
-                        System.out.printf("GameID %d: --> Not a valid request - either not a letter or already guesses.\n", gameId);
-                    } else {
-                        guessesChar = guessesInput[0];
-                        if(numberOfChar[Character.toUpperCase(guessesChar)] == -1) {
-                            System.out.printf("GameID %d: --> Not a valid request - either not a letter or already guesses.\n", gameId);
-                        } else {
-                            break;
-                        }
-                    }
-                }
-                guessesChar = Character.toUpperCase(guessesChar);
-                boolean isSuccessGuess = false;
-                for (int i = 0; i < inputWord.length; i++) {
-                    if(guessesChar == inputWord[i]) {
-                        isSuccessGuess = true;
-                        inputWord[i] = '*';
-                        break;
-                    }
-                }
-                if(isSuccessGuess) {
-                    System.out.printf("GameID %d: --> great guess!\n", gameId);
-                    scoreLeft--;
-                    if(numberOfChar[guessesChar] > 1) {
-                        numberOfChar[guessesChar]--;
-                    } else {
-                        numberOfChar[guessesChar] = -1;
-                    }
-
-                    if(scoreLeft == 0) {
-                        System.out.printf("\n----------------------------------------------------\n" +
-                                "GameID %d: Congratulations!!!\n" +
-                                "          You guessed the mystery word \"", gameId);
-                        for (char letter : inputWordFull) {
-                            System.out.print(letter);
-                        }
-                        System.out.printf("\" in %d guesses!\n", (guessesLeft-1));
-                        System.out.printf("\nGameID %d: Goodbye ....\n" +
-                                "--------------------------------------------------\n", gameId);
-                        guessesLeft = -1;
-                    }
-                } else {
-                    System.out.printf("GameID %d: --> Sorry, wrong guess!\n", gameId);
-                }
-                System.out.print("\n");
-                if(numberOfChar[guessesChar] == 0) {
-                    numberOfChar[guessesChar] = -1;
-                }
+                guessAChar(scanner);
             }
             guessesLeft--;
         } else {
@@ -201,5 +98,99 @@ public class Hangman {
             play_a_guess(scanner);
         }
 
+    }
+
+    private void checkFullWord(char[] guessesInput) {
+        if(guessesInput.length == inputWordFull.length) {
+            for (int i = 0; i < inputWordFull.length; i++) {
+                if(inputWordFull[i] == Character.toUpperCase(guessesInput[i])) {
+                    scoreLeftOneShoot--;
+                }
+            }
+            if(scoreLeftOneShoot == 0) {
+                System.out.print("\n");
+                System.out.printf("----------------------------------------------------\n" +
+                        "GameID %d: Congratulations!!!\n" +
+                        "          You guessed the mystery word \"", gameId);
+                for (char letter : inputWordFull) {
+                    System.out.print(letter);
+                }
+                System.out.printf("\" in %d guesses!\n", (guessesLeft-1));
+                System.out.printf("\nGameID %d: Goodbye ....\n" +
+                        "--------------------------------------------------\n", gameId);
+                guessesLeft = -1;
+            } else {
+                guessesLeft--;
+                System.out.printf("GameID %d: Incorrect guess, Continue guessting next character\n", gameId);
+            }
+        } else {
+            guessesLeft--;
+            System.out.printf("GameID %d: Incorrect guess, Continue guessting next character\n", gameId);
+        }
+    }
+    private void guessAChar(Scanner scanner) {
+        System.out.printf("GameID %d: Letters to try: ", gameId);
+        for (int i = 65 ; i <= 90; i++) {
+            if(numberOfChar[i] < 0) {
+                System.out.print("*");
+            } else {
+                System.out.printf("%c", i);
+            }
+        }
+        System.out.print("\n");
+        char guessesChar;
+        while (true) {
+            System.out.printf("GameID %d: Which letter should I check for? ", gameId);
+            scanner = new Scanner(System.in);
+            char[] guessesInput = scanner.next().toCharArray();
+            if (guessesInput.length > 1 || guessesInput[0] < 65 || guessesInput[0] > 122 ||
+                    (guessesInput[0] > 90 && guessesInput[0] < 97)) {
+                System.out.printf("GameID %d: --> Not a valid request - either not a letter or already guesses.\n", gameId);
+            } else {
+                guessesChar = guessesInput[0];
+                if(numberOfChar[Character.toUpperCase(guessesChar)] == -1) {
+                    System.out.printf("GameID %d: --> Not a valid request - either not a letter or already guesses.\n", gameId);
+                } else {
+                    break;
+                }
+            }
+        }
+        guessesChar = Character.toUpperCase(guessesChar);
+        boolean isSuccessGuess = false;
+        for (int i = 0; i < inputWord.length; i++) {
+            if(guessesChar == inputWord[i]) {
+                isSuccessGuess = true;
+                inputWord[i] = '*';
+                break;
+            }
+        }
+        if(isSuccessGuess) {
+            System.out.printf("GameID %d: --> great guess!\n", gameId);
+            scoreLeft--;
+            if(numberOfChar[guessesChar] > 1) {
+                numberOfChar[guessesChar]--;
+            } else {
+                numberOfChar[guessesChar] = -1;
+            }
+
+            if(scoreLeft == 0) {
+                System.out.printf("\n----------------------------------------------------\n" +
+                        "GameID %d: Congratulations!!!\n" +
+                        "          You guessed the mystery word \"", gameId);
+                for (char letter : inputWordFull) {
+                    System.out.print(letter);
+                }
+                System.out.printf("\" in %d guesses!\n", (guessesLeft-1));
+                System.out.printf("\nGameID %d: Goodbye ....\n" +
+                        "--------------------------------------------------\n", gameId);
+                guessesLeft = -1;
+            }
+        } else {
+            System.out.printf("GameID %d: --> Sorry, wrong guess!\n", gameId);
+        }
+        System.out.print("\n");
+        if(numberOfChar[guessesChar] == 0) {
+            numberOfChar[guessesChar] = -1;
+        }
     }
 }
